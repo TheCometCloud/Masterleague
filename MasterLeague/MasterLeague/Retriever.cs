@@ -29,9 +29,9 @@ namespace MasterLeague
             return Json;
         }
 
-        public static List<Team> GetAllTeams()
+        public static IList<Team> GetAllTeams()
         {
-            List<Team> teams = new List<Team>();
+            IList<Team> teams = new List<Team>();
             string Json = new WebClient().DownloadString(TEAMS_URL);
 
             dynamic tmp = JsonConvert.DeserializeObject(Json);
@@ -43,7 +43,9 @@ namespace MasterLeague
                 }
                 else
                 {
-                    teams.Append(new Team(result));
+                    Console.WriteLine(result.ToString());
+                    Team team = JsonConvert.DeserializeObject<Team>(result.ToString());
+                    teams.Add(team);
                 }
             }
             return teams;

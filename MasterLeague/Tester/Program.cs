@@ -17,7 +17,7 @@ namespace Tester
 
             foreach(Team team in Retriever.GetAllTeams())
             {
-                Console.WriteLine(team.ToString());
+                Console.WriteLine(team);
             }
             Console.ReadLine();
         }

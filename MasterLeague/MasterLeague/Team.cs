@@ -9,33 +9,10 @@ namespace MasterLeague
 {
     public class Team
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public int Region { get; private set; }
-        public string Url { get; private set; }
-
-        public Team(JObject ideal)
-        {
-            foreach (JProperty property in ideal.Properties())
-            {
-                switch (property.Name.ToLower())
-                {
-                    case "id":
-                        Id = (int) property.Value;
-                        break;
-                    case "name":
-                        Name = (string) property.Value;
-                        break;
-                    case "region":
-                        Region = (int) property.Value;
-                        break;
-                    case "url":
-                        Url = (string) property.Value;
-                        break;
-                }
-            }
-            Console.WriteLine(ToString());
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Region { get; set; }
+        public string Url { get; set; }
 
         public override string ToString()
         {
