@@ -19,6 +19,11 @@ namespace Tester
             {
                 Console.WriteLine(team);
             }
+
+            foreach(Player player in Retriever.GetAllPlayers())
+            {
+                Console.WriteLine(player);
+            }
             Console.ReadLine();
         }
     }
