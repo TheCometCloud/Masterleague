@@ -18,14 +18,12 @@ namespace MasterLeague
         public static string GetAllHeroes()
         {
             string Json = new WebClient().DownloadString(HEROES_URL);
-            Console.WriteLine(Json);
             return Json;
         }
 
         public static string GetAllMaps()
         {
             string Json = new WebClient().DownloadString(MAPS_URL);
-            Console.WriteLine(Json);
             return Json;
         }
 
@@ -37,16 +35,8 @@ namespace MasterLeague
             dynamic tmp = JsonConvert.DeserializeObject(Json);
             foreach (dynamic result in tmp.results)
             {
-                if (result == null)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine(result.ToString());
-                    Team team = JsonConvert.DeserializeObject<Team>(result.ToString());
-                    teams.Add(team);
-                }
+                Team team = JsonConvert.DeserializeObject<Team>(result.ToString());
+                teams.Add(team);
             }
             return teams;
         }

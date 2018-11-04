@@ -16,7 +16,7 @@ namespace MasterLeague
 
         public override string ToString()
         {
-            return $"Name: {Name}, ID: {Id}, Region: {Region}, Url: {Url}";
+            return Name;
         }
     }
 }
