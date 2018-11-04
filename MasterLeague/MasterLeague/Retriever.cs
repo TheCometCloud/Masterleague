@@ -116,5 +116,19 @@ namespace MasterLeague
             Match match = JsonConvert.DeserializeObject<Match>(Json);
             return match;
         }
+
+        public static string GetMapString(int id)
+        {
+            string Json = new WebClient().DownloadString($"{MAPS_URL}{id}?{JSON_FORMAT}");
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+            return tmp.name.ToString();
+        }
+
+        public static string GetRegionString(int id)
+        {
+            string Json = new WebClient().DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+            return tmp.name.ToString();
+        }
     }
 }
