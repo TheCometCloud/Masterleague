@@ -20,7 +20,12 @@ namespace Tester
                 Console.WriteLine(team);
             }
 
-            foreach(Player player in Retriever.GetAllPlayers())
+            foreach(Match match in Retriever.GetRecentMatches())
+            {
+                Console.WriteLine(match);
+            }
+
+            foreach (Player player in Retriever.GetAllPlayers())
             {
                 Console.WriteLine(player);
             }

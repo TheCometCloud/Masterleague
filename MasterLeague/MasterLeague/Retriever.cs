@@ -86,5 +86,21 @@ namespace MasterLeague
 
             return players;
         }
+
+        public static IList<Match> GetRecentMatches()
+        {
+            IList<Match> matches = new List<Match>();
+
+            string Json = new WebClient().DownloadString(MATCHES_URL + "?" + JSON_FORMAT);
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+
+            foreach (dynamic result in tmp.results)
+            {
+                Match match = JsonConvert.DeserializeObject<Match>(result.ToString());
+                matches.Add(match);
+            }
+
+            return matches;
+        }
     }
 }
