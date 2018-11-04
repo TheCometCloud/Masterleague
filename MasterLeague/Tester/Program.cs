@@ -15,6 +15,8 @@ namespace Tester
             Console.WriteLine();
             Console.WriteLine(Retriever.GetAllHeroes());
 
+            Console.WriteLine(Retriever.GetTeamById(95));
+
             foreach(Team team in Retriever.GetAllTeams())
             {
                 Console.WriteLine(team);
