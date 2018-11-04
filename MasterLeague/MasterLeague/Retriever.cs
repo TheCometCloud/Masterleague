@@ -14,6 +14,12 @@ namespace MasterLeague
         static readonly string HEROES_URL = "https://api.masterleague.net/heroes/?format=json";
         static readonly string MAPS_URL = "https://api.masterleague.net/maps/?format=json";
         static readonly string TEAMS_URL = "https://api.masterleague.net/teams/?format=json";
+        static readonly string REGIONS_URL = "https://api.masterleague.net/regions/?format=json";
+        static readonly string PATCHES_URL = "https://api.masterleague.net/patches/?format=json";
+        static readonly string PLAYERS_URL = "https://api.masterleague.net/players/?format=json";
+        static readonly string TOURNAMENTS_URL = "https://api.masterleague.net/tournaments/?format=json";
+        static readonly string MATCHES_URL = "https://api.masterleague.net/matches/?format=json";
+        static readonly string CALENDAR_URL = "https://api.masterleague.net/calendar/?format=json";
 
         public static string GetAllHeroes()
         {
