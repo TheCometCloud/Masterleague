@@ -109,5 +109,12 @@ namespace MasterLeague
             Team team = JsonConvert.DeserializeObject<Team>(Json);
             return team;
         }
+
+        public static Match GetMatchById(int id)
+        {
+            string Json = new WebClient().DownloadString($"{MATCHES_URL}{id}?{JSON_FORMAT}");
+            Match match = JsonConvert.DeserializeObject<Match>(Json);
+            return match;
+        }
     }
 }
