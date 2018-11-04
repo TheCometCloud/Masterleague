@@ -21,6 +21,8 @@ namespace MasterLeague
         static readonly string MATCHES_URL = "https://api.masterleague.net/matches/";
         static readonly string CALENDAR_URL = "https://api.masterleague.net/calendar/";
 
+        static readonly string PLUG_TEXT = "Data retrieved from Masterleague.net";
+
         static readonly string JSON_FORMAT = "format=json";
 
         public static string GetAllHeroes()
