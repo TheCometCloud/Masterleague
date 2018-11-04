@@ -37,7 +37,7 @@ namespace MasterLeague
 
         public override string ToString()
         {
-            if (RealName != null)
+            if (RealName != "")
             {
                 return $"{RealName}, aka {NickName}";
             }

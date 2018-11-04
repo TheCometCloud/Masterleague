@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MasterLeague
 {
@@ -18,10 +21,24 @@ namespace MasterLeague
         public int Map { get; set; }
         public int Duration { get; set; }
         public string Url { get; set; }
+        public dynamic drafts { get; set; }
+
+        public Draft[] Drafts
+        {
+            get
+            {
+                Draft[] holder = new Draft[]
+                {
+                    JsonConvert.DeserializeObject<Draft>(drafts[0].ToString()),
+                    JsonConvert.DeserializeObject<Draft>(drafts[1].ToString())
+                };
+                return holder;
+            }
+        }
 
         public override string ToString()
         {
-            return $"{Date.ToString()} {Round}";
+            return $"{Date.ToString()} {Round} {Drafts[0]} vs. {Drafts[1]}";
         }
     }
 }
