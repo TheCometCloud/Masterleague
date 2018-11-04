@@ -13,6 +13,22 @@ namespace MasterLeague
         public string Name { get; set; }
         public int Region { get; set; }
         public string Url { get; set; }
+        public dynamic Logo { get; set; }
+
+        public string SmallLogo
+        {
+            get { return Logo.small; }
+        }
+
+        public string BigLogo
+        {
+            get { return Logo.big; }
+        }
+
+        public string MediumLogo
+        {
+            get { return Logo.medium; }
+        }
 
         public override string ToString()
         {
