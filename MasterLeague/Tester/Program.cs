@@ -13,7 +13,11 @@ namespace Tester
         {
             Console.WriteLine(Retriever.GetAllMaps());
             Console.WriteLine();
-            Console.WriteLine(Retriever.GetAllHeroes());
+            Console.WriteLine(Retriever.GetHeroByID(7));
+            foreach(Hero hero in Retriever.GetAllHeroes())
+            {
+                Console.WriteLine(hero);
+            }
 
             Console.WriteLine(Retriever.GetTeamById(95));
             Console.WriteLine(Retriever.GetMatchById(7772));
