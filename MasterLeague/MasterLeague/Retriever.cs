@@ -106,6 +106,24 @@ namespace MasterLeague
             return heroes;
         }
 
+        public static IList<Patch> GetAllPatches()
+        {
+            IList<Patch> patches = new List<Patch>();
+
+            string Json = new WebClient().DownloadString($"{PATCHES_URL}?{JSON_FORMAT}");
+            dynamic tmp;
+
+            tmp = JsonConvert.DeserializeObject(Json);
+
+            foreach (dynamic result in tmp)
+            {
+                Patch patch = JsonConvert.DeserializeObject<Patch>(result.ToString());
+                patches.Add(patch);
+            }
+
+            return patches;
+        }
+
         public static IList<Match> GetRecentMatches()
         {
             IList<Match> matches = new List<Match>();
@@ -155,6 +173,13 @@ namespace MasterLeague
             string Json = new WebClient().DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
             dynamic tmp = JsonConvert.DeserializeObject(Json);
             return tmp.name.ToString();
+        }
+
+        public static Patch GetPatchByID(int id)
+        {
+            string Json = new WebClient().DownloadString($"{PATCHES_URL}{id}?{JSON_FORMAT}");
+            Patch patch = JsonConvert.DeserializeObject<Patch>(Json);
+            return patch;
         }
     }
 }

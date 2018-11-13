@@ -11,6 +11,11 @@ namespace Tester
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(Retriever.GetPatchByID(1));
+            foreach(Patch patch in Retriever.GetAllPatches())
+            {
+                Console.WriteLine(patch);
+            }
             Console.WriteLine(Retriever.GetAllMaps());
             Console.WriteLine();
             Console.WriteLine(Retriever.GetHeroByID(7));
