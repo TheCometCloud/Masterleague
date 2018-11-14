@@ -11,6 +11,7 @@ namespace Tester
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(Retriever.GetPlayerByID(468));
             Console.WriteLine(Retriever.GetTournamentByID(83));
             foreach(Tournament tournament in Retriever.GetAllTournaments())
             {

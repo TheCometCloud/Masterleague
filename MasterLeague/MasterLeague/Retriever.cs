@@ -189,6 +189,13 @@ namespace MasterLeague
             return tournament;
         }
 
+        public static Player GetPlayerByID(int id)
+        {
+            string Json = new WebClient().DownloadString($"{PLAYERS_URL}{id}?{JSON_FORMAT}");
+            Player player = JsonConvert.DeserializeObject<Player>(Json);
+            return player;
+        }
+
         public static IList<Tournament> GetAllTournaments()
         {
             IList<Tournament> tournaments = new List<Tournament>();
