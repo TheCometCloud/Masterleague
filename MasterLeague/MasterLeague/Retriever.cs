@@ -181,5 +181,30 @@ namespace MasterLeague
             Patch patch = JsonConvert.DeserializeObject<Patch>(Json);
             return patch;
         }
+
+        public static Tournament GetTournamentByID(int id)
+        {
+            string Json = new WebClient().DownloadString($"{TOURNAMENTS_URL}{id}?{JSON_FORMAT}");
+            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(Json);
+            return tournament;
+        }
+
+        public static IList<Tournament> GetAllTournaments()
+        {
+            IList<Tournament> tournaments = new List<Tournament>();
+
+            string Json = new WebClient().DownloadString($"{TOURNAMENTS_URL}?{JSON_FORMAT}");
+            dynamic tmp;
+
+            tmp = JsonConvert.DeserializeObject(Json);
+
+            foreach (dynamic result in tmp.results)
+            {
+                Tournament tournament = JsonConvert.DeserializeObject<Tournament>(result.ToString());
+                tournaments.Add(tournament);
+            }
+
+            return tournaments;
+        }
     }
 }

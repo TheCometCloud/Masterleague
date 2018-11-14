@@ -11,13 +11,20 @@ namespace Tester
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(Retriever.GetTournamentByID(83));
+            foreach(Tournament tournament in Retriever.GetAllTournaments())
+            {
+                Console.WriteLine(tournament);
+            }
+
             Console.WriteLine(Retriever.GetPatchByID(1));
             foreach(Patch patch in Retriever.GetAllPatches())
             {
                 Console.WriteLine(patch);
             }
+
             Console.WriteLine(Retriever.GetAllMaps());
-            Console.WriteLine();
+
             Console.WriteLine(Retriever.GetHeroByID(7));
             foreach(Hero hero in Retriever.GetAllHeroes())
             {
