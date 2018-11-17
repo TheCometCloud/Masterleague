@@ -14,14 +14,14 @@ namespace MasterLeague
         public List<int> Bans { get; set; }
         public JArray picks { get; set; }
 
-        public List<int> Picks
+        public IDictionary<int, int> Picks
         {
             get
             {
-                List<int> holder = new List<int>();
+                Dictionary<int,int> holder = new Dictionary<int,int>();
                 foreach (dynamic pick in picks)
                 {
-                    holder.Add(pick.hero.ToObject<int>());
+                    holder[pick.player.ToObject<int>()] = pick.hero.ToObject<int>();
                 }
                 return holder;
             }
@@ -30,9 +30,9 @@ namespace MasterLeague
         public override string ToString()
         {
             List<string> tmp = new List<string>();
-            foreach(int i in Picks)
+            foreach(KeyValuePair<int, int> pick in Picks)
             {
-                tmp.Add(i.ToString());
+                tmp.Add($"{pick.Key.ToString()}: {pick.Value.ToString()}");
             }
             return string.Join(", ", tmp);
         }

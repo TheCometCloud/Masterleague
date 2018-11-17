@@ -196,9 +196,19 @@ namespace MasterLeague
             return player;
         }
 
+        public static IDictionary<Player, Hero> GetPopulatedDraftDict(Draft draft)
+        {
+            Dictionary<Player, Hero> populated = new Dictionary<Player, Hero>();
+            foreach(KeyValuePair<int, int> kv in draft.Picks)
+            {
+                populated[GetPlayerByID(kv.Key)] = GetHeroByID(kv.Value);
+            }
+            return populated;
+        }
+
         public static IList<Tournament> GetAllTournaments()
         {
-            IList<Tournament> tournaments = new List<Tournament>();
+            List<Tournament> tournaments = new List<Tournament>();
 
             string Json = new WebClient().DownloadString($"{TOURNAMENTS_URL}?{JSON_FORMAT}");
             dynamic tmp;

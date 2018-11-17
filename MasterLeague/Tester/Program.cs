@@ -11,6 +11,15 @@ namespace Tester
     {
         public static void Main(string[] args)
         {
+            Match tmp = Retriever.GetMatchById(7772);
+            foreach (KeyValuePair<Player, Hero> kv in Retriever.GetPopulatedDraftDict(tmp.Drafts[0]))
+            {
+                Console.WriteLine($"{kv.Key}: {kv.Value}");
+            }
+            foreach (KeyValuePair<Player, Hero> kv in Retriever.GetPopulatedDraftDict(tmp.Drafts[1]))
+            {
+                Console.WriteLine($"{kv.Key}: {kv.Value}");
+            }
             Console.WriteLine(Retriever.GetPlayerByID(468));
             Console.WriteLine(Retriever.GetTournamentByID(83));
             foreach(Tournament tournament in Retriever.GetAllTournaments())
