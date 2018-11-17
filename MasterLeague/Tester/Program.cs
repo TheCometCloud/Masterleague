@@ -12,8 +12,9 @@ namespace Tester
         public static void Main(string[] args)
         {
             Retriever fetcher = new Retriever();
-
-            Match tmp = fetcher.GetMatchById(7772);
+            Hero abathur = fetcher.GetHero(37);
+            Console.WriteLine(fetcher.GetHero(abathur).GetType());
+            Match tmp = fetcher.GetMatch(7772);
             foreach (KeyValuePair<Player, Hero> kv in fetcher.GetPopulatedDraftDict(tmp.Drafts[0]))
             {
                 Console.WriteLine($"{kv.Key}: {kv.Value}");
@@ -22,14 +23,14 @@ namespace Tester
             {
                 Console.WriteLine($"{kv.Key}: {kv.Value}");
             }
-            Console.WriteLine(fetcher.GetPlayerByID(468));
-            Console.WriteLine(fetcher.GetTournamentByID(83));
+            Console.WriteLine(fetcher.GetPlayer(468));
+            Console.WriteLine(fetcher.GetTournament(83));
             foreach(Tournament tournament in fetcher.GetAllTournaments())
             {
                 Console.WriteLine(tournament);
             }
 
-            Console.WriteLine(fetcher.GetPatchByID(1));
+            Console.WriteLine(fetcher.GetPatch(1));
             foreach(Patch patch in fetcher.GetAllPatches())
             {
                 Console.WriteLine(patch);
@@ -37,16 +38,16 @@ namespace Tester
 
             Console.WriteLine(fetcher.GetAllMaps());
 
-            Console.WriteLine(fetcher.GetHeroByID(7));
+            Console.WriteLine(fetcher.GetHero(7));
             foreach(Hero hero in fetcher.GetAllHeroes())
             {
                 Console.WriteLine(hero);
             }
 
-            Console.WriteLine(fetcher.GetTeamById(95));
-            Console.WriteLine(fetcher.GetMatchById(7772));
-            Console.WriteLine(fetcher.GetMapString(3));
-            Console.WriteLine(fetcher.GetRegionString(4));
+            Console.WriteLine(fetcher.GetTeam(95));
+            Console.WriteLine(fetcher.GetMatch(7772));
+            Console.WriteLine(fetcher.GetMap(3));
+            Console.WriteLine(fetcher.GetRegion(4));
 
             foreach(Team team in fetcher.GetAllTeams())
             {

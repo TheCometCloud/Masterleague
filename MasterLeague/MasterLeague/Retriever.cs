@@ -48,7 +48,7 @@ namespace MasterLeague
         public IList<Team> GetAllTeams()
         {
             IList<Team> teams = new List<Team>();
-            
+
             string Json = Client.DownloadString($"{TEAMS_URL}?{JSON_FORMAT}");
             dynamic tmp;
             do
@@ -138,88 +138,6 @@ namespace MasterLeague
             return patches;
         }
 
-        public IList<Match> GetRecentMatches()
-        {
-            IList<Match> matches = new List<Match>();
-
-            string Json = Client.DownloadString($"{MATCHES_URL}?{JSON_FORMAT}");
-            dynamic tmp = JsonConvert.DeserializeObject(Json);
-
-            foreach (dynamic result in tmp.results)
-            {
-                Match match = JsonConvert.DeserializeObject<Match>(result.ToString());
-                matches.Add(match);
-            }
-
-            return matches;
-        }
-
-        public Team GetTeamById(int id)
-        {
-            string Json = Client.DownloadString($"{TEAMS_URL}{id}?{JSON_FORMAT}");
-            Team team = JsonConvert.DeserializeObject<Team>(Json);
-            return team;
-        }
-
-        public Match GetMatchById(int id)
-        {
-            string Json = Client.DownloadString($"{MATCHES_URL}{id}?{JSON_FORMAT}");
-            Match match = JsonConvert.DeserializeObject<Match>(Json);
-            return match;
-        }
-
-        public DetailedHero GetHeroByID(int id)
-        {
-            string Json = Client.DownloadString($"{HEROES_URL}{id}?{JSON_FORMAT}");
-            DetailedHero hero = JsonConvert.DeserializeObject<DetailedHero>(Json);
-            return hero;
-        }
-
-        public string GetMapString(int id)
-        {
-            string Json = Client.DownloadString($"{MAPS_URL}{id}?{JSON_FORMAT}");
-            dynamic tmp = JsonConvert.DeserializeObject(Json);
-            return tmp.name.ToString();
-        }
-
-        public string GetRegionString(int id)
-        {
-            string Json = Client.DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
-            dynamic tmp = JsonConvert.DeserializeObject(Json);
-            return tmp.name.ToString();
-        }
-
-        public Patch GetPatchByID(int id)
-        {
-            string Json = Client.DownloadString($"{PATCHES_URL}{id}?{JSON_FORMAT}");
-            Patch patch = JsonConvert.DeserializeObject<Patch>(Json);
-            return patch;
-        }
-
-        public Tournament GetTournamentByID(int id)
-        {
-            string Json = Client.DownloadString($"{TOURNAMENTS_URL}{id}?{JSON_FORMAT}");
-            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(Json);
-            return tournament;
-        }
-
-        public Player GetPlayerByID(int id)
-        {
-            string Json = Client.DownloadString($"{PLAYERS_URL}{id}?{JSON_FORMAT}");
-            Player player = JsonConvert.DeserializeObject<Player>(Json);
-            return player;
-        }
-
-        public IDictionary<Player, Hero> GetPopulatedDraftDict(Draft draft)
-        {
-            Dictionary<Player, Hero> populated = new Dictionary<Player, Hero>();
-            foreach(KeyValuePair<int, int> kv in draft.Picks)
-            {
-                populated[GetPlayerByID(kv.Key)] = GetHeroByID(kv.Value);
-            }
-            return populated;
-        }
-
         public IList<Tournament> GetAllTournaments()
         {
             List<Tournament> tournaments = new List<Tournament>();
@@ -236,6 +154,147 @@ namespace MasterLeague
             }
 
             return tournaments;
+        }
+
+        public IList<Match> GetRecentMatches()
+        {
+            IList<Match> matches = new List<Match>();
+
+            string Json = Client.DownloadString($"{MATCHES_URL}?{JSON_FORMAT}");
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+
+            foreach (dynamic result in tmp.results)
+            {
+                Match match = JsonConvert.DeserializeObject<Match>(result.ToString());
+                matches.Add(match);
+            }
+
+            return matches;
+        }
+
+        public Team GetTeam(int id)
+        {
+            string Json = Client.DownloadString($"{TEAMS_URL}{id}?{JSON_FORMAT}");
+            Team team = JsonConvert.DeserializeObject<Team>(Json);
+            return team;
+        }
+
+        public Team GetTeam(Draft draft)
+        {
+            return GetTeam(draft.Team);
+        }
+
+        public Match GetMatch(int id)
+        {
+            string Json = Client.DownloadString($"{MATCHES_URL}{id}?{JSON_FORMAT}");
+            Match match = JsonConvert.DeserializeObject<Match>(Json);
+            return match;
+        }
+
+        public DetailedHero GetHero(int id)
+        {
+            string Json = Client.DownloadString($"{HEROES_URL}{id}?{JSON_FORMAT}");
+            DetailedHero hero = JsonConvert.DeserializeObject<DetailedHero>(Json);
+            return hero;
+        }
+
+        public DetailedHero GetHero(Hero hero)
+        {
+            return GetHero(hero.Id);
+        }
+
+        public string GetMap(int id)
+        {
+            string Json = Client.DownloadString($"{MAPS_URL}{id}?{JSON_FORMAT}");
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+            return tmp.name.ToString();
+        }
+
+        public string GetMap(Match match)
+        {
+            return GetMap(match.Map);
+        }
+
+        public string GetRegion(int id)
+        {
+            string Json = Client.DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
+            dynamic tmp = JsonConvert.DeserializeObject(Json);
+            return tmp.name.ToString();
+        }
+
+        public string GetRegion(Player player)
+        {
+            return GetRegion(player.Region);
+        }
+
+        public string GetRegion(Tournament tournament)
+        {
+            int? id = tournament.Region;
+            if (id != null)
+            {
+                return GetRegion((int) id);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string GetRegion(Team team)
+        {
+            return GetRegion(team.Region);
+        }
+
+        public Patch GetPatch(int id)
+        {
+            string Json = Client.DownloadString($"{PATCHES_URL}{id}?{JSON_FORMAT}");
+            Patch patch = JsonConvert.DeserializeObject<Patch>(Json);
+            return patch;
+        }
+
+        public Patch GetPatch(Match match)
+        {
+            return GetPatch(match.Patch);
+        }
+
+        public Tournament GetTournament(int id)
+        {
+            string Json = Client.DownloadString($"{TOURNAMENTS_URL}{id}?{JSON_FORMAT}");
+            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(Json);
+            return tournament;
+        }
+
+        public Tournament GetTournament(Match match)
+        {
+            int id = match.Tournament;
+            return GetTournament(id);
+        }
+
+        public Player GetPlayer(int id)
+        {
+            string Json = Client.DownloadString($"{PLAYERS_URL}{id}?{JSON_FORMAT}");
+            Player player = JsonConvert.DeserializeObject<Player>(Json);
+            return player;
+        }
+
+        public IList<Hero> GetBans(Draft draft)
+        {
+            List<Hero> bans = new List<Hero>();
+            foreach (int ban in draft.Bans)
+            {
+                bans.Add(GetHero(ban));
+            }
+            return bans;
+        }
+
+        public IDictionary<Player, Hero> GetPopulatedDraftDict(Draft draft)
+        {
+            Dictionary<Player, Hero> populated = new Dictionary<Player, Hero>();
+            foreach(KeyValuePair<int, int> kv in draft.Picks)
+            {
+                populated[GetPlayer(kv.Key)] = GetHero(kv.Value);
+            }
+            return populated;
         }
     }
 }
