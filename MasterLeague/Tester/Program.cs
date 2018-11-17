@@ -11,52 +11,54 @@ namespace Tester
     {
         public static void Main(string[] args)
         {
-            Match tmp = Retriever.GetMatchById(7772);
-            foreach (KeyValuePair<Player, Hero> kv in Retriever.GetPopulatedDraftDict(tmp.Drafts[0]))
+            Retriever fetcher = new Retriever();
+
+            Match tmp = fetcher.GetMatchById(7772);
+            foreach (KeyValuePair<Player, Hero> kv in fetcher.GetPopulatedDraftDict(tmp.Drafts[0]))
             {
                 Console.WriteLine($"{kv.Key}: {kv.Value}");
             }
-            foreach (KeyValuePair<Player, Hero> kv in Retriever.GetPopulatedDraftDict(tmp.Drafts[1]))
+            foreach (KeyValuePair<Player, Hero> kv in fetcher.GetPopulatedDraftDict(tmp.Drafts[1]))
             {
                 Console.WriteLine($"{kv.Key}: {kv.Value}");
             }
-            Console.WriteLine(Retriever.GetPlayerByID(468));
-            Console.WriteLine(Retriever.GetTournamentByID(83));
-            foreach(Tournament tournament in Retriever.GetAllTournaments())
+            Console.WriteLine(fetcher.GetPlayerByID(468));
+            Console.WriteLine(fetcher.GetTournamentByID(83));
+            foreach(Tournament tournament in fetcher.GetAllTournaments())
             {
                 Console.WriteLine(tournament);
             }
 
-            Console.WriteLine(Retriever.GetPatchByID(1));
-            foreach(Patch patch in Retriever.GetAllPatches())
+            Console.WriteLine(fetcher.GetPatchByID(1));
+            foreach(Patch patch in fetcher.GetAllPatches())
             {
                 Console.WriteLine(patch);
             }
 
-            Console.WriteLine(Retriever.GetAllMaps());
+            Console.WriteLine(fetcher.GetAllMaps());
 
-            Console.WriteLine(Retriever.GetHeroByID(7));
-            foreach(Hero hero in Retriever.GetAllHeroes())
+            Console.WriteLine(fetcher.GetHeroByID(7));
+            foreach(Hero hero in fetcher.GetAllHeroes())
             {
                 Console.WriteLine(hero);
             }
 
-            Console.WriteLine(Retriever.GetTeamById(95));
-            Console.WriteLine(Retriever.GetMatchById(7772));
-            Console.WriteLine(Retriever.GetMapString(3));
-            Console.WriteLine(Retriever.GetRegionString(4));
+            Console.WriteLine(fetcher.GetTeamById(95));
+            Console.WriteLine(fetcher.GetMatchById(7772));
+            Console.WriteLine(fetcher.GetMapString(3));
+            Console.WriteLine(fetcher.GetRegionString(4));
 
-            foreach(Team team in Retriever.GetAllTeams())
+            foreach(Team team in fetcher.GetAllTeams())
             {
                 Console.WriteLine(team);
             }
 
-            foreach(Match match in Retriever.GetRecentMatches())
+            foreach(Match match in fetcher.GetRecentMatches())
             {
                 Console.WriteLine(match);
             }
 
-            foreach (Player player in Retriever.GetAllPlayers())
+            foreach (Player player in fetcher.GetAllPlayers())
             {
                 Console.WriteLine(player);
             }

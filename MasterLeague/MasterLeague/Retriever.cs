@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Cache;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -11,6 +13,9 @@ namespace MasterLeague
 {
     public class Retriever
     {
+        private readonly HttpRequestCachePolicy Policy;
+        private readonly WebClient Client;
+
         static readonly string HEROES_URL = "https://api.masterleague.net/heroes/";
         static readonly string MAPS_URL = "https://api.masterleague.net/maps/";
         static readonly string TEAMS_URL = "https://api.masterleague.net/teams/";
@@ -25,17 +30,26 @@ namespace MasterLeague
 
         static readonly string JSON_FORMAT = "format=json";
 
-        public static string GetAllMaps()
+        public Retriever()
         {
-            string Json = new WebClient().DownloadString($"{MAPS_URL}?{JSON_FORMAT}");
+            Policy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromDays(1));
+            Client = new WebClient
+            {
+                CachePolicy = Policy
+            };
+        }
+
+        public string GetAllMaps()
+        {
+            string Json = Client.DownloadString($"{MAPS_URL}?{JSON_FORMAT}");
             return Json;
         }
 
-        public static IList<Team> GetAllTeams()
+        public IList<Team> GetAllTeams()
         {
             IList<Team> teams = new List<Team>();
             
-            string Json = new WebClient().DownloadString($"{TEAMS_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{TEAMS_URL}?{JSON_FORMAT}");
             dynamic tmp;
             do
             {
@@ -49,18 +63,18 @@ namespace MasterLeague
 
                 if (tmp.next != null)
                 {
-                    Json = new WebClient().DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
+                    Json = Client.DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
                 }
             } while (tmp.next != null);
 
             return teams;
         }
 
-        public static IList<Player> GetAllPlayers()
+        public IList<Player> GetAllPlayers()
         {
             IList<Player> players = new List<Player>();
 
-            string Json = new WebClient().DownloadString($"{PLAYERS_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{PLAYERS_URL}?{JSON_FORMAT}");
             dynamic tmp;
             do
             {
@@ -74,18 +88,18 @@ namespace MasterLeague
 
                 if (tmp.next != null)
                 {
-                    Json = new WebClient().DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
+                    Json = Client.DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
                 }
             } while (tmp.next != null);
 
             return players;
         }
 
-        public static IList<Hero> GetAllHeroes()
+        public IList<Hero> GetAllHeroes()
         {
             IList<Hero> heroes = new List<Hero>();
 
-            string Json = new WebClient().DownloadString($"{HEROES_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{HEROES_URL}?{JSON_FORMAT}");
             dynamic tmp;
             do
             {
@@ -99,18 +113,18 @@ namespace MasterLeague
 
                 if (tmp.next != null)
                 {
-                    Json = new WebClient().DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
+                    Json = Client.DownloadString($"{tmp.next.ToString()}&{JSON_FORMAT}");
                 }
             } while (tmp.next != null);
 
             return heroes;
         }
 
-        public static IList<Patch> GetAllPatches()
+        public IList<Patch> GetAllPatches()
         {
             IList<Patch> patches = new List<Patch>();
 
-            string Json = new WebClient().DownloadString($"{PATCHES_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{PATCHES_URL}?{JSON_FORMAT}");
             dynamic tmp;
 
             tmp = JsonConvert.DeserializeObject(Json);
@@ -124,11 +138,11 @@ namespace MasterLeague
             return patches;
         }
 
-        public static IList<Match> GetRecentMatches()
+        public IList<Match> GetRecentMatches()
         {
             IList<Match> matches = new List<Match>();
 
-            string Json = new WebClient().DownloadString($"{MATCHES_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{MATCHES_URL}?{JSON_FORMAT}");
             dynamic tmp = JsonConvert.DeserializeObject(Json);
 
             foreach (dynamic result in tmp.results)
@@ -140,63 +154,63 @@ namespace MasterLeague
             return matches;
         }
 
-        public static Team GetTeamById(int id)
+        public Team GetTeamById(int id)
         {
-            string Json = new WebClient().DownloadString($"{TEAMS_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{TEAMS_URL}{id}?{JSON_FORMAT}");
             Team team = JsonConvert.DeserializeObject<Team>(Json);
             return team;
         }
 
-        public static Match GetMatchById(int id)
+        public Match GetMatchById(int id)
         {
-            string Json = new WebClient().DownloadString($"{MATCHES_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{MATCHES_URL}{id}?{JSON_FORMAT}");
             Match match = JsonConvert.DeserializeObject<Match>(Json);
             return match;
         }
 
-        public static DetailedHero GetHeroByID(int id)
+        public DetailedHero GetHeroByID(int id)
         {
-            string Json = new WebClient().DownloadString($"{HEROES_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{HEROES_URL}{id}?{JSON_FORMAT}");
             DetailedHero hero = JsonConvert.DeserializeObject<DetailedHero>(Json);
             return hero;
         }
 
-        public static string GetMapString(int id)
+        public string GetMapString(int id)
         {
-            string Json = new WebClient().DownloadString($"{MAPS_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{MAPS_URL}{id}?{JSON_FORMAT}");
             dynamic tmp = JsonConvert.DeserializeObject(Json);
             return tmp.name.ToString();
         }
 
-        public static string GetRegionString(int id)
+        public string GetRegionString(int id)
         {
-            string Json = new WebClient().DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{REGIONS_URL}{id}?{JSON_FORMAT}");
             dynamic tmp = JsonConvert.DeserializeObject(Json);
             return tmp.name.ToString();
         }
 
-        public static Patch GetPatchByID(int id)
+        public Patch GetPatchByID(int id)
         {
-            string Json = new WebClient().DownloadString($"{PATCHES_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{PATCHES_URL}{id}?{JSON_FORMAT}");
             Patch patch = JsonConvert.DeserializeObject<Patch>(Json);
             return patch;
         }
 
-        public static Tournament GetTournamentByID(int id)
+        public Tournament GetTournamentByID(int id)
         {
-            string Json = new WebClient().DownloadString($"{TOURNAMENTS_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{TOURNAMENTS_URL}{id}?{JSON_FORMAT}");
             Tournament tournament = JsonConvert.DeserializeObject<Tournament>(Json);
             return tournament;
         }
 
-        public static Player GetPlayerByID(int id)
+        public Player GetPlayerByID(int id)
         {
-            string Json = new WebClient().DownloadString($"{PLAYERS_URL}{id}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{PLAYERS_URL}{id}?{JSON_FORMAT}");
             Player player = JsonConvert.DeserializeObject<Player>(Json);
             return player;
         }
 
-        public static IDictionary<Player, Hero> GetPopulatedDraftDict(Draft draft)
+        public IDictionary<Player, Hero> GetPopulatedDraftDict(Draft draft)
         {
             Dictionary<Player, Hero> populated = new Dictionary<Player, Hero>();
             foreach(KeyValuePair<int, int> kv in draft.Picks)
@@ -206,11 +220,11 @@ namespace MasterLeague
             return populated;
         }
 
-        public static IList<Tournament> GetAllTournaments()
+        public IList<Tournament> GetAllTournaments()
         {
             List<Tournament> tournaments = new List<Tournament>();
 
-            string Json = new WebClient().DownloadString($"{TOURNAMENTS_URL}?{JSON_FORMAT}");
+            string Json = Client.DownloadString($"{TOURNAMENTS_URL}?{JSON_FORMAT}");
             dynamic tmp;
 
             tmp = JsonConvert.DeserializeObject(Json);
